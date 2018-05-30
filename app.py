@@ -1,6 +1,6 @@
 from flask import Flask,url_for,render_template,make_response
 import requests
-from urllib3 import HTTPConnectionPool
+import urllib3
 import urllib.request
 from urllib3 import poolmanager
 app = Flask(__name__)
@@ -48,8 +48,12 @@ def website(name):
     opener = urllib.request.build_opener()
     opener.addheaders = [headers]
     response = opener.open(url).read()
-
     return response
+@app.route('/websiter/<name>')
+def websiter(name):
+    url = 'http://www.' + name + '.com'
+    response = requests.get(url)
+    return response.content.decode('utf-8')
 if __name__ == '__main__':
     app.run('127.0.0.2','4000')
 #host ip and the port number

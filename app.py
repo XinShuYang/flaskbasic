@@ -42,8 +42,8 @@ def website(name):
     #response = http.urlopen(method='GET',url='http://www.baidu.com',preload_content=False)
     if (name==None or name==''):
         name='baidu'
-
-    url = 'http://www.'+name+'.com'
+    url = 'http://' + name
+    #url = 'http://www.'+name+'.com'
     headers = ('User-Agent','Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36')
     opener = urllib.request.build_opener()
     opener.addheaders = [headers]
@@ -51,7 +51,7 @@ def website(name):
     return response
 @app.route('/websiter/<name>')
 def websiter(name):
-    url = 'http://www.' + name + '.com'
+    url = 'http://' + name 
     response = requests.get(url)
     return response.content.decode('utf-8')
 if __name__ == '__main__':

@@ -1,5 +1,8 @@
-from flask import Flask,url_for,render_template
-
+from flask import Flask,url_for,render_template,make_response
+import requests
+from urllib3 import HTTPConnectionPool
+import urllib.request
+from urllib3 import poolmanager
 app = Flask(__name__)
 @app.route('/')
 def one():
@@ -26,6 +29,27 @@ def urlfor_static():
 @app.route('/<name>.html')
 def htmltest(name="index"):
     return render_template(name+'.html')
+@app.route('/website/<name>')
+def website(name):
+    #response = make_response()
+    #r = requests.get('http://www.baidu.com')
+    #response.headers.update(r.headers)
+    #response.data = r.text
+    #return response
+    #HTTPConnectionPool.__init__()
+    #response = HTTPConnectionPool.urlopen(method='GET',url='http://www.baidu.com')
+    #http=poolmanager()
+    #response = http.urlopen(method='GET',url='http://www.baidu.com',preload_content=False)
+    if (name==None or name==''):
+        name='baidu'
+
+    url = 'http://www.'+name+'.com'
+    headers = ('User-Agent','Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36')
+    opener = urllib.request.build_opener()
+    opener.addheaders = [headers]
+    response = opener.open(url).read()
+
+    return response
 if __name__ == '__main__':
     app.run('127.0.0.2','4000')
 #host ip and the port number
